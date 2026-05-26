@@ -36,5 +36,11 @@ functions/node_modules/
 # Ignore crawler directory; it is a separate repository
 crawler/
 
+# Firebase & sensitive config files (should never be committed)
+android/app/google-services.json
+ios/Runner/GoogleService-Info.plist
+lib/firebase_options.dart
+functions/serviceAccountKey.json
+
 # OS
 Thumbs.db
