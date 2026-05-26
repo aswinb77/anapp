@@ -48,9 +48,51 @@ class _NavItem {
 // ── Entry point ───────────────────────────────────────────────────────────────
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform,
-  );
+
+  // Catch widget build errors
+  ErrorWidget.builder = (FlutterErrorDetails details) {
+    return MaterialApp(
+      home: Scaffold(
+        backgroundColor: Colors.black,
+        body: Center(
+          child: SingleChildScrollView(
+            child: Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Text(
+                'WIDGET ERROR:\n${details.exceptionAsString()}\n\n${details.stack}',
+                style: const TextStyle(color: Colors.redAccent, fontSize: 14),
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  };
+
+  try {
+    await Firebase.initializeApp(
+      options: DefaultFirebaseOptions.currentPlatform,
+    );
+  } catch (e, stackTrace) {
+    // Catch Firebase init errors (e.g. before runApp)
+    runApp(MaterialApp(
+      home: Scaffold(
+        backgroundColor: Colors.black,
+        body: Center(
+          child: SingleChildScrollView(
+            child: Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Text(
+                'FIREBASE ERROR:\n$e\n\n$stackTrace',
+                style: const TextStyle(color: Colors.yellow, fontSize: 14),
+              ),
+            ),
+          ),
+        ),
+      ),
+    ));
+    return;
+  }
   
   runApp(
     MultiProvider(
