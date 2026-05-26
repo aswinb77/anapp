@@ -42,7 +42,7 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions web = FirebaseOptions(
-    apiKey: 'REDACTED',
+    apiKey: 'AIzaSyCp_AVtOe8OC2PgYy-lC2MNE45Do1MNv3Q',
     appId: '1:124101866626:web:824f06be58dbb65ce5b09b',
     messagingSenderId: '124101866626',
     projectId: 'movie-2e707',
@@ -52,7 +52,7 @@ class DefaultFirebaseOptions {
   );
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'REDACTED',
+    apiKey: 'AIzaSyDCwyqiCkR9PAFn7AcRX0wvuvnnkLPxi_s',
     appId: '1:124101866626:android:e032092bcd630395e5b09b',
     messagingSenderId: '124101866626',
     projectId: 'movie-2e707',
@@ -60,20 +60,20 @@ class DefaultFirebaseOptions {
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'dummy-api-key',
-    appId: '1:dummy-app-id:ios:dummy',
-    messagingSenderId: 'dummy-sender-id',
-    projectId: 'dummy-project-id',
-    storageBucket: 'dummy-project-id.appspot.com',
+    apiKey: 'AIzaSyBU_DNsr7K8U177aqvZ3dMS5-1n2mDLRgo',
+    appId: '1:124101866626:ios:YOUR_APP_ID',
+    messagingSenderId: '124101866626',
+    projectId: 'movie-2e707',
+    storageBucket: 'movie-2e707.appspot.com',
     iosBundleId: 'com.example.moviecc',
   );
 
   static const FirebaseOptions macos = FirebaseOptions(
-    apiKey: 'dummy-api-key',
-    appId: '1:dummy-app-id:ios:dummy',
-    messagingSenderId: 'dummy-sender-id',
-    projectId: 'dummy-project-id',
-    storageBucket: 'dummy-project-id.appspot.com',
+    apiKey: 'AIzaSyBU_DNsr7K8U177aqvZ3dMS5-1n2mDLRgo',
+    appId: '1:124101866626:ios:YOUR_APP_ID',
+    messagingSenderId: '124101866626',
+    projectId: 'movie-2e707',
+    storageBucket: 'movie-2e707.appspot.com',
     iosBundleId: 'com.example.moviecc',
   );
 }

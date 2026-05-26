@@ -2,10 +2,12 @@ rules_version = "2";
 service cloud.firestore {
   match /databases/{database}/documents {
 
-    // Verified news posts — everyone can read, only server can write
+    // Verified news posts — everyone can read, users can only update likes/comments
     match /news_posts/{docId} {
       allow read: if true;
-      allow write: if false;
+      allow update: if request.auth != null 
+                    && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['likesList', 'commentsList']);
+      allow create, delete: if false;
     }
 
     // User posts — anyone can read
@@ -38,6 +40,10 @@ service cloud.firestore {
         allow update: if request.auth.uid == uid
                       && request.resource.data.keys().hasOnly(["isRead", "read"]);
         allow delete: if request.auth.uid == uid;
+      }
+
+      match /favorites/{favoriteId} {
+        allow read, write: if request.auth != null && request.auth.uid == uid;
       }
     }
 

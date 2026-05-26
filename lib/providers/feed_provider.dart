@@ -139,7 +139,8 @@ class FeedProvider with ChangeNotifier {
     final postIndex = _posts.indexWhere((p) => p.id == postId);
     if (postIndex != -1) {
       final post = _posts[postIndex];
-      final docRef = _db.collection('posts').doc(postId);
+      final collectionName = post.authorId == 'system' ? 'news_posts' : 'posts';
+      final docRef = _db.collection(collectionName).doc(postId);
 
       if (post.isLiked) {
         post.likes--;
@@ -171,7 +172,8 @@ class FeedProvider with ChangeNotifier {
       notifyListeners();
 
       try {
-        await _db.collection('posts').doc(postId).update({
+        final collectionName = _posts[postIndex].authorId == 'system' ? 'news_posts' : 'posts';
+        await _db.collection(collectionName).doc(postId).update({
           'commentsList': FieldValue.arrayUnion([comment])
         });
       } catch (e) {

@@ -83,7 +83,7 @@ class FavoritesProvider extends ChangeNotifier {
     if (isAdding) {
       _favorites.insert(0, movie);
     } else {
-      _favorites.removeWhere((item) => item.id == movie.id);
+      _favorites.removeWhere((item) => item.id == movie.id || (item.tmdbId != null && item.tmdbId == movie.id) || (movie.tmdbId != null && item.id == movie.tmdbId));
     }
     notifyListeners();
 
