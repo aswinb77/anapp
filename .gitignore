@@ -1,0 +1,40 @@
+# Miscellaneous
+*.class
+*.log
+*.pyc
+*.swp
+.DS_Store
+.atom/
+.build/
+.buildlog/
+.history
+.svn/
+.swiftpm/
+migrate_working_dir/
+.env
+serviceAccountKey.json
+Archive.zip
+moviecc_flutter.iml
+android/moviecc_flutter_android.iml
+.idea/
+.metadata
+
+# Flutter/Dart/Pub related
+**/doc/api/
+**/ios/Flutter/.last_build_id
+.dart_tool/
+.flutter-plugins-dependencies*
+.pub-cache/
+.pub/
+/build/
+coverage/
+
+# Node
+node_modules/
+functions/node_modules/
+
+# Ignore crawler directory; it is a separate repository
+crawler/
+
+# OS
+Thumbs.db

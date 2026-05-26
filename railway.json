@@ -1,0 +1,8 @@
+{
+  "build": {
+    "buildCommand": "cd crawler && npm install"
+  },
+  "deploy": {
+    "startCommand": "cd crawler && npm run schedule"
+  }
+}

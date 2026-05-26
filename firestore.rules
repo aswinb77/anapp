@@ -1,0 +1,57 @@
+rules_version = "2";
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Verified news posts — everyone can read, only server can write
+    match /news_posts/{docId} {
+      allow read: if true;
+      allow write: if false;
+    }
+
+    // User posts — anyone can read
+    // Only server can update moderation fields like status/fake_score.
+    match /posts/{postId} {
+      allow read: if true;
+      allow create: if request.auth != null;
+      allow update: if request.auth != null 
+                    && (!request.resource.data.diff(resource.data).affectedKeys().hasAny(['status', 'fake_score', 'fake_signals', 'reviewed_by', 'reviewed_at', 'removal_reason']));
+      allow delete: if request.auth.uid == resource.data.authorId || request.auth.uid == resource.data.userId;
+    }
+
+    // User strike records — only server writes, user can read their own
+    match /user_strikes/{strikeId} {
+      allow read: if request.auth != null
+                  && request.auth.uid == resource.data.uid;
+      allow write: if false;
+    }
+
+    // User documents — allow read, allow user to update non-moderation fields
+    match /users/{uid} {
+      allow read: if request.auth != null;
+      allow create: if request.auth.uid == uid;
+      allow update: if request.auth.uid == uid
+                    && (!request.resource.data.diff(resource.data).affectedKeys().hasAny(['trust_score', 'strike_count', 'restricted', 'can_post', 'last_strike_at']));
+
+      match /notifications/{notifId} {
+        allow read: if request.auth.uid == uid;
+        allow create: if request.auth != null; // for chat online notifications
+        allow update: if request.auth.uid == uid
+                      && request.resource.data.keys().hasOnly(["isRead", "read"]);
+        allow delete: if request.auth.uid == uid;
+      }
+    }
+
+    // Global Chat Rooms
+    match /{chatRoom}/{messageId} {
+      allow read: if request.auth != null && chatRoom.matches('^global_chat_room_[0-9]+$');
+      allow create: if request.auth != null && chatRoom.matches('^global_chat_room_[0-9]+$');
+      allow delete: if request.auth != null && chatRoom.matches('^global_chat_room_[0-9]+$') && request.auth.uid == resource.data.senderId;
+    }
+
+    // Movies — public read only
+    match /movies/{movieId} {
+      allow read: if true;
+      allow write: if false;
+    }
+  }
+}
