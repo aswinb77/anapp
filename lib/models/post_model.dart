@@ -69,8 +69,11 @@ class Post {
     );
   }
 
-  factory Post.fromNewsPost(DocumentSnapshot doc) {
+  factory Post.fromNewsPost(DocumentSnapshot doc, String? currentUserId) {
     final data = doc.data() as Map<String, dynamic>? ?? {};
+    final likesList = List<String>.from(data['likesList'] ?? []);
+    final commentsList = List<String>.from(data['commentsList'] ?? []);
+    
     return Post(
       id: doc.id,
       title: data['title'] ?? '',
@@ -79,6 +82,11 @@ class Post {
       authorName: 'Movie.cc',
       authorId: 'system',
       createdAt: (data['created_at'] as Timestamp?)?.toDate() ?? DateTime.now(),
+      likes: likesList.length,
+      comments: commentsList.length,
+      isLiked: currentUserId != null && likesList.contains(currentUserId),
+      likesList: likesList,
+      commentsList: commentsList,
       isVerifiedNews: true,
       sourceName: data['source_name'],
       sourceUrl: data['source_url'],

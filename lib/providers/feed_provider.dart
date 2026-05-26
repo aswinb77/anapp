@@ -47,7 +47,7 @@ class FeedProvider with ChangeNotifier {
           .get();
 
       final items = <Post>[
-        ...newsSnap.docs.map((doc) => Post.fromNewsPost(doc)),
+        ...newsSnap.docs.map((doc) => Post.fromNewsPost(doc, currentUserId)),
         ...userSnap.docs.map((doc) => Post.fromFirestore(doc, currentUserId))
             .where((p) => p.status != 'removed' && p.status != 'under_review'),
       ];
